@@ -1,8 +1,8 @@
 #!/usr/local/bin/python
 # coding=UTF-8
 # coding和‘＝’之间不能有空格
-#根据给定的年月日以数字形式打印出日期
 
+# 根据给定的年月日以数字形式打印出日期
 months = [
         'January',
         'February',

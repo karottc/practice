@@ -53,3 +53,6 @@ var7 = [7,8,9]
 print var6+var7
 print var6
 print
+
+# index\insert\pop\remove\reverse\sort
+# 元组函数：tuple\

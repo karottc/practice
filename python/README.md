@@ -14,4 +14,5 @@
 8. dict_method_20140622.py：字典的一些方法示例。
 9. print_20140523.py：`print`和赋值。
 10. if_20140623.py：if语句。
-11. while_20140623.py：while循环、for循环。
+11. while_20140623.py：while循环、for循环。zip可以用于不等长的序列。
+12. multitable_20140624.py：输出一个 **9x9的乘法表**，综合使用for循环和print语句，以及元组。

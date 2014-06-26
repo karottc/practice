@@ -16,3 +16,6 @@
 10. if_20140623.py：if语句。
 11. while_20140623.py：while循环、for循环。zip可以用于不等长的序列。
 12. multitable_20140624.py：输出一个 **9x9的乘法表**，综合使用for循环和print语句，以及元组。
+13. function_20140625.py：一些函数示例。
+14. more_function_20140627.py：练习使用函数的参数。
+15. global_params_20140627.py：全局变量和局部变量。

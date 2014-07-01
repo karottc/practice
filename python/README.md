@@ -21,3 +21,4 @@
 15. global_params_20140627.py：全局变量和局部变量。
 16. recur_20140628.py：递归函数示例。
 17. class_20140630.py：class的示例。
+18. exception_070114.py：异常捕捉示例。

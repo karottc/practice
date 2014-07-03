@@ -20,5 +20,6 @@
 14. more_function_20140627.py：练习使用函数的参数。
 15. global_params_20140627.py：全局变量和局部变量。
 16. recur_20140628.py：递归函数示例。
-17. class_20140630.py：class的示例。
-18. exception_070114.py：异常捕捉示例。
+17. class_20140630.py：class的示例，建议在有class的文件开始的处添加一行 `__metaclass__=type` ,这样表示使用新式类。
+18. exception_20140701.py：异常捕捉示例。
+19. class_more_20140702.py：魔法方法、属性和迭代器示例。python的构造函数是 `def __init__(self):` ,析构函数是 `__del__(self)` ，析构函数的调用时间点不确定，一般是程序结束的时候，在子类中初始化父类用 `super` 函数，用法为： `super(childclassname, self).__init__()` ；使用`@`操作符来表示静态方法；生成器的使用，这个好像是python里面新的东西我在C/C++以及java/C#里面都没碰到过。

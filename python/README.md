@@ -23,3 +23,5 @@
 17. class_20140630.py：class的示例，建议在有class的文件开始的处添加一行 `__metaclass__=type` ,这样表示使用新式类。
 18. exception_20140701.py：异常捕捉示例。
 19. class_more_20140702.py：魔法方法、属性和迭代器示例。python的构造函数是 `def __init__(self):` ,析构函数是 `__del__(self)` ，析构函数的调用时间点不确定，一般是程序结束的时候，在子类中初始化父类用 `super` 函数，用法为： `super(childclassname, self).__init__()` ；使用`@`操作符来表示静态方法；生成器的使用，这个好像是python里面新的东西我在C/C++以及java/C#里面都没碰到过。
+20. generator_20140705.py：生成器的方法，**注：** 使用send方法(而不是next方法)只有在生成器挂起之后才有意义(也就是说在yield函数第一次执行之后)。
+21. eight_empress_20140705.py：八皇后问题的python解法，非常简洁，当皇后数量n较大的时候，运行速度就比较慢了。

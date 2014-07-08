@@ -32,4 +32,10 @@ def flatten(nested):
         result.append(nested)
     return result
 
+# yield 的测试
+def fun(n):
+    for i in range(n):
+        yield i **2
 
+print list(fun(5))
+print

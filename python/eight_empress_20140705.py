@@ -1,12 +1,12 @@
 #!/usr/local/bin/python
 #coding=UTF-8
 
-# nextX - 下一个皇后的水平位置
-# nextY - 代表垂直位置
+# nextX - 下一个皇后在水平线上的位置
+# nextY - 下一个皇后在垂直线上的位置
 def conflict(state, nextX):
     nextY = len(state)
     for i in range(nextY):
-        # 水平距离为0 - 表示在同意水平线上
+        # 水平距离为0 - 表示在同一垂直线上
         # 水平距离 == 垂直距离 - 表示在对角线上
         # 上面两种情况发生冲突
         if abs(state[i] - nextX) in (0, nextY - i):
@@ -33,6 +33,8 @@ def queens2(num=8, state=()):
 for solution in queens2(8):
     print solution
 print len(list(queens2(8)))
+print
+print list(queens2(8))
 print
 
 def prettyprint(solution):

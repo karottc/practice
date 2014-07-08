@@ -21,6 +21,9 @@ def queens(num, state):
 
 print list(queens(4, (1,3,0)))
 
+# 终于理解了这段代码啦
+# 对于使用yield生成的迭代器(这种说法可能有些问题，但是就是那个意思吧)，每使用一次next方法，
+# 就往下执行一个，不调用next方法，则不执行，而使用list 来遍历，则相当于调用了全部的next方法。
 def queens2(num=8, state=()):
     for pos in range(num):
         if not conflict(state, pos):

@@ -3,6 +3,7 @@
 
 // N Queens Problem
 // 试探-回溯算法，递归实现
+// copyright: http://bbs.csdn.net/topics/80489768
 
 // sum用来记录皇后放置成功的不同布局数；upperlim用来标记所有列都已经放置好了皇后
 long sum = 0, upperlim = 1;

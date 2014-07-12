@@ -4,6 +4,7 @@
 *swp
 *out
 *pyc
+*.dat
 /comment
 /tags
 /python/.idea/

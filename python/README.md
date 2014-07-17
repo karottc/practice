@@ -30,3 +30,7 @@
 24. reverseargs.py：反序输出变量，系统函数示例。
 25. shelve_20140712.py：系统库 `shelve` 的文件操作示例。
 26. file_20140714.py：文件操作的一些示例。
+27. sqlite_20140717.py：使用SQLite的示例，基本的对数据库表的创建和插入操作；ABBREV.txt，这是输入数据库的源文件。
+28. food_query_20140715.py：这个是对上面生成数据库的查询操作。
+29. socket_server_20140718.py, socket_client_20140718.py：简单的socket的服务端和客户端的示例。
+30. select_20140718.py, pull_20140718.py：使用select和pull两种异步IO方式来实现的简单服务器。

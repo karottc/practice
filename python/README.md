@@ -34,3 +34,4 @@
 28. food_query_20140715.py：这个是对上面生成数据库的查询操作。
 29. socket_server_20140718.py, socket_client_20140718.py：简单的socket的服务端和客户端的示例。
 30. select_20140718.py, pull_20140718.py：使用select和pull两种异步IO方式来实现的简单服务器。
+31. htmlParser_20140720.py：使用tidy的urllib的示例。

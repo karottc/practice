@@ -33,3 +33,4 @@
 29. socket_server_20140718.py, socket_client_20140718.py：简单的socket的服务端和客户端的示例。
 30. select_20140718.py, pull_20140718.py：使用select和pull两种异步IO方式来实现的简单服务器。
 31. htmlParser_20140720.py：使用tidy的urllib的示例。
+32. urllib_20140730.py：第15章，网页抓取内容的示例，

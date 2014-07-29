@@ -8,10 +8,10 @@ import re
 p = re.compile('<h3><a .*?><a .*? href="(.*?)">(.*?)</a>')
 website = 'https://www.python.org/community/jobs'
 
-p2 = re.compile('<a .*? href=(.*?)>(.*?)</a>')
+p2 = re.compile('<a .*? href="(.*?)">(.*?)</a>')
 website2 = 'http://www.karottc.com/'
 
-p3 = re.compile('<h3 id="(.*?)"> (.*?) </h3>')
+p3 = re.compile('<h3 id=(.*?)>(.*?)</h3>')
 website3 = 'http://www.karottc.com/blog/2014/06/15/current-doing/'
 
 text = urlopen(website).read()
@@ -29,9 +29,10 @@ for url, name in p2.findall(text2):
 
 print
 print '======================================================'
+### 这个输出现在是OK的！
 text3 = urlopen(website3).read()
 for url, name in p3.findall(text3):
 	print 'name =', name
-	print 'url =', url
+	print 'id =', url
 	print
 	print

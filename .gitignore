@@ -7,5 +7,5 @@
 *.dat
 *.db
 /comment
-/tags
+tags
 /python/.idea/

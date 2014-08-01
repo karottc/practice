@@ -23,7 +23,18 @@ for url, name in p.findall(text):
 print '======================================================'
 """
 print
-count = len(p.findall(text))
+blogs = p.findall(text)
+count = len(blogs)
 print 'total count: %d pieces blog !' % count 
+print
 
-### 20140731: total count: 54 pieces !
+url_1 = 'http://yinwang.org/' + blogs[0][0]
+name_1 = blogs[0][1]
+url_2 = 'http://yinwang.org/' + blogs[1][0]
+name_2 = blogs[1][1]
+
+print 'First blog: %s - %s !' % (name_1, url_1)
+print 'Second blog: %s - %s !' % (name_2, url_2) 
+### 20140731: 
+### total count: 54 pieces !
+### First blog: Homeless！我需要你的帮助！ - http://yinwang.org/blog-cn/2014/07/30/help !

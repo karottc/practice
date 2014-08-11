@@ -1,7 +1,7 @@
-#!/python/usr/local/bin
+#!/usr/local/bin/python
 #coding=UTF-8
 
-import re
+import re, fileinput
 
 # 下面是有些无用的废代码
 some_text = 'alpha. beta....gamma delta'
@@ -25,3 +25,20 @@ pat = r'[..?\-",]+'
 result5 = re.findall(pat, text)
 print 'result5(findall,...):', result5
 print
+
+# 组对象匹配
+m = re.match(r'www\.(.*)\..{3}', 'www.python.org')
+result6 = m.group(1)
+print 'result6(group):', result6
+print m.start(1),m.end(1),m.span(1)
+print
+
+### 找出email的发信人
+pat = re.compile('From: (.*) <.*?>$')
+for line in fileinput.input():
+	m = pat.match(line)
+	if m:
+		print m.group(1)
+
+### 可以这样来运行上面的代码：
+### python filename message.eml

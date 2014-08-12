@@ -112,8 +112,8 @@ class HTMLDestination:
 	def __init__(self, filename):
 		self.filename = filename
 
-	def receiveItems(self, item):
-		out = open(self, filename, 'w')
+	def receiveItems(self, items):
+		out = open(self.filename, 'w')
 		print >> out, """
 		<html>
 			<head>
@@ -155,12 +155,14 @@ def runDefaultSetup():
 	agent.addSource(bbc)
 
 	# 从comp.lang.python.announce获取新闻的NNTPSource：
-	clpa_server = 'news.foo.bar' # Insert real server name
+	"""
+    clpa_server = 'news.foo.bar' # Insert real server name
 	clpa_group = 'comp.lang.python.announce'
 	clpa_window = 1
 	clpa = NNTPSource(clpa_server, clpa_group, clpa_window)
 
 	agent.addSource(clpa)
+    """
 
 	# 增加纯文本目标和HTML目标：
 	agent.addDestination(PlanDestination())

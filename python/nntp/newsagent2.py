@@ -1,5 +1,10 @@
 #!/usr/local/bin/python
 #coding=UTF-8
+'''
+Created on Aug 14, 2014
+
+@author: dchen
+'''
 
 from nntplib import NNTP
 from time import strftime, time, localtime
@@ -64,7 +69,7 @@ class NNTPSource:
 
 		server = NNTP(self.servername)
 
-		ids = server.newnews(self,group, date, hour)[1]
+		ids = server.newnews(self.group, date, hour)[1]
 
 		for id in ids:
 			lines = server.article(id)[3]
@@ -95,6 +100,24 @@ class SimpleWebSource:
 		for title, body in zip(titles, bodies):
 			yield NewsItem(title, wrap(body))
 
+class TempTest:
+    """
+    临时添加的测试
+    """
+    def __init__(self, url, pattern):
+        self.url = url
+        self.pattern = re.compile(pattern)
+        
+    def getItems(self):
+        text = urlopen(self.url).read()
+        result = self.pattern.findall(text)
+        for url, name in result:
+            title = name
+            body = 'http://yinwang.org/' + url
+            yield NewsItem(title, body)
+            
+
+
 class PlanDestination:
 	"""
 	将所有新闻项目格式化为纯文本的新闻目标类。
@@ -102,7 +125,7 @@ class PlanDestination:
 	def receiveItems(self, items):
 		for item in items:
 			print item.title
-			print '-' * len(item, title)
+			print '-' * len(item.title)
 			print item.body
 
 class HTMLDestination:
@@ -118,6 +141,7 @@ class HTMLDestination:
 		<html>
 			<head>
 				<title>Today's News </title>
+				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			</head>
 			<body>
 				<h1>Today's News </h1>
@@ -147,12 +171,20 @@ def runDefaultSetup():
 	agent = NewAgent()
 
 	# 从BBS新闻网站获取新闻的SimpleWebSource:
+	"""
 	bbc_url = 'http://news.bbc.co.uk/text_only.stm'
 	bbc_title = r'(?s)a href="[^"]*">\s*<b>\s(.*?)\s*</b>'
 	bbc_body = r'(?s)</a>\s*<br />\s*(.*?)\s*<'
 	bbc = SimpleWebSource(bbc_url, bbc_title, bbc_body)
 
-	agent.addSource(bbc)
+    agent.addSource(bbc)
+    """
+    
+    bbc_url2 = 'http://www.yinwang.org/'
+    bbc_title2 = '<a href="http://yinwang\\.org/(.*?)">(.*?)</a>'
+    bbc2 = TempTest(bbc_url2, bbc_title2)
+    agent.addSource(bbc2)
+    
 
 	# 从comp.lang.python.announce获取新闻的NNTPSource：
 	"""

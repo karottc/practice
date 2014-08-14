@@ -43,8 +43,10 @@ class NewAgent:
 		从所有来源获取所有新闻项目并且发不到所有目标。
 		"""
         items = []
+        # getItems得到是yield表达式保存的结果。
         for source in self.sources:
             items.extend(source.getItems())
+        # 输出为目标格式结果：控制台的格式和HTML格式。
         for dest in self.destinations:
             dest.receiveItems(items)
 
@@ -115,16 +117,17 @@ class TempTest:
     临时添加的测试
     """
 
-    def __init__(self, url, pattern):
+    def __init__(self, url, pattern,prefix=''):
         self.url = url
         self.pattern = re.compile(pattern)
+        self.prefix = prefix
 
     def getItems(self):
         text = urlopen(self.url).read()
         result = self.pattern.findall(text)
         for url, name in result:
             title = name
-            body = 'http://yinwang.org/' + url
+            body = self.prefix + url
             yield NewsItem(title, body)
 
 
@@ -163,13 +166,13 @@ class HTMLDestination:
         id = 0
         for item in items:
             id += 1
-            print >> out, '<li><a name="#%i">%s</a></li>' % (id, item.title)
-        print >> out, '</ul>'
+            print >> out, '<li><a href="#%i" name="%i">%s</a></li>' % (id, id, item.title)
+        print >> out, '</ul> <br/> <hr/>'
 
         id = 0
         for item in items:
             id += 1
-            print >> out, '<h2><a name="%i">%s</a></h2>' % (id, item.title)
+            print >> out, '<h2><a name="#%i">%s</a></h2>' % (id, item.title)
             print >> out, '<pre>%s</pre>' % item.body
 
         print >> out, """
@@ -196,10 +199,15 @@ def runDefaultSetup():
 
     bbc_url2 = 'http://www.yinwang.org/'
     bbc_title2 = '<a href="http://yinwang\\.org/(.*?)">(.*?)</a>'
-    bbc2 = TempTest(bbc_url2, bbc_title2)
+    bbc2 = TempTest(bbc_url2, bbc_title2,'http://yinwang.org')
 
     agent.addSource(bbc2)
 
+    blog_url = 'http://www.karottc.com'
+    blog_rule = '<a href="http://(.*?)">(.*?)</a>'
+    blog_karottc = TempTest(blog_url, blog_rule, 'http://')
+
+    agent.addSource(blog_karottc)
     # 从comp.lang.python.announce获取新闻的NNTPSource：
     """
     clpa_server = 'news.foo.bar' # Insert real server name

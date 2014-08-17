@@ -63,8 +63,8 @@ def insertDB(msg):
         """ % (msg['sender'], msg['subject'], msg['text'])
 
     curs.execute(query)
-    curs.commit()
-    curs.close()
+    conn.commit()
+    conn.close()
 
 def deleteDB():
     pass

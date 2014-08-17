@@ -20,3 +20,6 @@
 database.py：sqlite3的数据库文件；
 
 simple_main.py：第一次的简单实现，可以基本运行，但是结果有点不对。
+
+main.py,view.py,edit.py,save.py：这些文件是第二次实现，将database.py的操作封装到了一个class里面。如果要运行这个系统，需要根据具体的环境稍加修改。:-)
+

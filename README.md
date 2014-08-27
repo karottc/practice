@@ -11,4 +11,5 @@
 1. Git-pro-zh.pdf：本人制作的Git入门书籍一本，只是把在线的 http://git-scm.com/book/zh 弄了一个离线的版本而已；
 ![gitbook](images/gitbook-preview.png)
 2. poj目录：一些在线OJ的题目；
-3. python目录：一些python的练习代码。
+3. python目录：一些python的练习代码；
+4. algorithm目录：一些算法的实现。

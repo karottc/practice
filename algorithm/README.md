@@ -7,3 +7,4 @@
 3. polynomial.cc: 多项式求值的实现;
 4. one_to_one_mapping.cc: 函数集合一对一映射的实现;
 5. celebrity.cc: 社会名流问题的算法实现;
+6. maximum_subsequences.cc: 求最大子序列的问题的算法实现;

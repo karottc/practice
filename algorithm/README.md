@@ -9,3 +9,4 @@
 5. celebrity.cc: 社会名流问题的算法实现;
 6. maximum_subsequences.cc: 求最大子序列的问题的算法实现;
 7. Vector_class.cc: 模仿STL中的vector的class的实现;
+8. List_class.cc: List的class的实现。

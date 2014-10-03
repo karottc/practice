@@ -1,5 +1,78 @@
 #include <stdio.h>
 
+// 二叉查找树类的框架
+template <typename Comparable>
+class BinarySearchTree
+{
+    public:
+        BinarySearchTree();
+        BinarySearchTree( const BinarySearchTree & rhs );
+        ~BinarySearchTree();
+
+        const Comparable & findMin() const;
+        const Comparable & findMax() const;
+        bool contains( const Comparable & x ) const;
+        bool isEmpty() const;
+
+        void makeEmpty();
+        void insert( const Comparable & x );
+        void remove( const Comparable & x );
+
+        const BinarySearchTree & operator= ( const BinarySearchTree & rhs );
+
+    private:
+        struct BinaryNode
+        {
+            Comparable element;
+            BinaryNode *left;
+            BinaryNode *right;
+
+            BinaryNode( const Comparable & theElement, BinaryNode *lt, BinaryNode *rt)
+                : element(theElement), left(lt), right(rt) { }
+        };
+
+        BinaryNode *root;
+        
+        void insert(const Comparable & x, BinaryNode * &t) const;
+        void remove(const Comparable & x, BinaryNode * &t) const;
+        BinaryNode * findMin( BinaryNode *t) const;
+        BinaryNode * findMax( BinaryNode *t) const;
+        bool contains( const Comparable & x, BinaryNode *t ) const;
+        void makeEmpty( BinaryNode * &t );
+        void printTree( BinaryNode *t ) const;
+        BinaryNode * clone( BinaryNode *t ) const;
+};
+
+// 私有成员contains操作
+template <typename Comparable>
+bool BinarySearchTree::contains( const Comparable & x, BinaryNode *t ) const
+{
+    if ( t == NULL )
+        return false;
+    else if ( x < t->element )
+        return contains(x, t->left );
+    else if ( x > t->element )
+        return contains(x, t->right );
+    else
+        return true;
+}
+
+// 重载＝操作符，实现深拷贝
+const BinarySearchTree & BinarySearchTree::operator= ( const BinarySearchTree & rhs )
+{
+    if ( this != &rhs )
+    {
+        makeEmpty();
+        root = clone( rhs.root );
+    }
+    return *this;
+}
+BinaryNode * BinarySearchTree::clone( BinaryNode *t ) const
+{
+    if ( t == NULL )
+        return NULL;
+    return new BinaryNode( t->element, clone( t->left ), clone( t->right ));
+}
 /* 二叉搜索树：查找 */
 bst_tree* BST_Search(bst_tree* root, var value)
 {

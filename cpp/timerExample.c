@@ -9,7 +9,7 @@
 
 void callFunction(union sigval arg);
 int ctoi(char n);
-int isCloseSSID(char *buffer);
+int timeCal(char *buffer);
 
 int main(int argc, char **argv)
 {
@@ -125,7 +125,7 @@ int ctoi(char n)
     return result;
 }
 
-int isCloseSSID(char *buffer)
+int timeCal(char *buffer)
 {
     /* time format: dd/mm/yyyy-hh:mm-1 
      * the last bit is 1 - valid; 0 - invalid.

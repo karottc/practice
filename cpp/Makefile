@@ -10,3 +10,12 @@ timerExample:
 
 read:
 	$(GCC) forkReadFile.c -o read -Wall -DFORK_READ
+
+priority:
+	$(G++) test_priority_queue.cc -o priority -Wall 
+
+
+OBJ-RM= timerExample read priority
+
+clean:
+	rm -rf $(OBJ-RM)

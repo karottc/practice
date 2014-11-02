@@ -69,3 +69,51 @@ void swap(int *A, int a, int b)
     A[a] = A[b];
     A[b] = temp;
 }
+
+/* 
+ * Insert item x, allowing duplicates.
+ * 这种插入操作最大开销为O(logN), 根据业界证明：
+ * 平均需要的比较次数为：2.607次->平均上移层数为: 1.607 层
+ */
+void insert(const Comparable &x)
+{
+    if (currentSize == array.size() - 1)
+        array.resize(array.size() * 2);
+    
+    // Percoloate up
+    int hole = ++currentSize;
+    for (; hole > 1 && x < array[hole / 2]; hole /= 2)
+        array[hole] = array[hole / 2];
+    array[hole] = x;
+}
+
+/**
+ * Internal method to percolate down in the heap.
+ * hole is the index at which the percolate begins.
+ */
+void percolateDown(int hole)
+{
+    int child;
+    Comparable tmp = array[hole];
+    for ( ; hole * 2 <= currentSize; hole = child)
+    {
+        child = hole * 2;
+        if (child != currentSize && array[child + 1] < array[child])
+            child++;
+        if (array[child] < tmp)
+            array[hole] = array[child];
+        else
+            break;
+    }
+    array[hole] = tmp;
+}
+
+/**
+ * Establish heap order property from an arbitrary arrangment of items.
+ * Runs in linear time.
+ */
+void buildHeap()
+{
+    for (int i = currentSize / 2; i > 0; i--)
+        percolateDown(i);
+}

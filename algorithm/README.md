@@ -11,3 +11,4 @@
 7. Vector_class.cc: 模仿STL中的vector的class的实现;
 8. List_class.cc: List的class的实现;
 9. avl.cc: AVL的一些代码;
+10. LeftistHeap.cc: 左式堆的实现代码；

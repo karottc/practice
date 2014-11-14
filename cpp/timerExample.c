@@ -50,7 +50,6 @@ void callFunction(union sigval arg)
 {
     size_t n;
     char *buffer = NULL;    // line-by-line read "database" file's buffer
-    char *str = NULL;
     int flag = 0;
     if (access(FILE_NAME,F_OK) != 0)
     {

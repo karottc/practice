@@ -1,20 +1,21 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     cout.setf(ios::left);
-    cout << setw(12) << "char=" << sizeof(char) << "\n";
-    cout << setw(12) << "bool=" << sizeof(bool) << "\n";
-    cout << setw(12) << "short=" << sizeof(short) << endl;
-    cout << setw(12) << "int=" << sizeof(int) << endl;
-    cout << setw(12) << "long=" << sizeof(long) << endl;
-    cout << setw(12) << "float=" << sizeof(float) << endl;
-    cout << setw(12) << "double=" << sizeof(double) << endl;
-    cout << setw(12) << "long long=" << sizeof(long long) << endl;
-    cout << setw(12) << "long double=" << sizeof(long double) << endl;
+    cout << setw(12) << "char=" << sizeof(char) << " byte, longest=" << numeric_limits<char>::max() << "\n";
+    cout << setw(12) << "bool=" << sizeof(bool) << " byte, longest=" << numeric_limits<bool>::max() << "\n";
+    cout << setw(12) << "short=" << sizeof(short) << " byte, longest=" << numeric_limits<short>::max() << endl;
+    cout << setw(12) << "int=" << sizeof(int) << " byte, longest=" << numeric_limits<int>::max() << endl;
+    cout << setw(12) << "long=" << sizeof(long) << " byte, longest=" << numeric_limits<long>::max() << endl;
+    cout << setw(12) << "float=" << sizeof(float) << " byte, longest=" << numeric_limits<float>::max() << endl;
+    cout << setw(12) << "double=" << sizeof(double) << " byte, longest=" << numeric_limits<double>::max() << endl;
+    cout << setw(12) << "long long=" << sizeof(long long) << " byte, longest=" << numeric_limits<long long>::max() << endl;
+    cout << setw(12) << "long double=" << sizeof(long double) << " byte, longest=" << numeric_limits<long double>::max() << endl;
     cout << setw(12) << "int*=" << sizeof(int *) << endl;
     cout << setw(12) << "char*=" << sizeof(char *) << endl;
     /* 

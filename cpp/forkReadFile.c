@@ -10,6 +10,7 @@
  */
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>   /* wait 函数 */
 
 #define FILENAME "test.txt"
 
@@ -17,7 +18,7 @@ int main(void)
 {
     pid_t pid = -1;
 #ifdef FORK_READ
-    if (pid=fork() > 0)
+    if ((pid=fork()) > 0)
     {
         if (fork() == 0)
         {

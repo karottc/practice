@@ -4,7 +4,7 @@
 
 ### 《SQL必知必会》 ###
 
-下面联系均在MYSQL中测试通过：
+下面练习均在MYSQL中测试通过：
 
 1. [user-guide.pdf](user-guide.pdf): 指导怎么用[create.sql](create.sql) 和 [populate.sql](populate.sql) 来创建数据库，为了使用方便。
 2. [select-chapter-2.sql](select-chapter-2.sql): 第二章数据检索的练习，关键字为：select，distinct, offset;
@@ -20,3 +20,7 @@
 12. [chapter12-join.sql](chapter12-join.sql): 联结表;
 13. [chapter13-join-advance.sql](chapter13-join-advance.sql): 创建高级联结;
 14. [chapter14-union.sql](chapter14-union.sql): 组合查询;
+15. [chapter15-insert.sql](chapter15-insert.sql):数据插入;
+16. [chapter16-update-delete.sql](chapter16-update-delete.sql):更新和删除数据;
+17. [chapter17-create.sql](chapter17-create.sql):创建和操纵表;
+18. [chapter18-view.sql](chapter18-view.sql): 使用视图;

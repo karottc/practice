@@ -7,7 +7,7 @@ else
 	G++ = /usr/local/Cellar/gcc/4.9.1/bin/g++-4.9
 endif
 
-TARGET=timerExample read priority size
+TARGET=timerExample read priority size setTest mapTest vectorTest
 
 all: $(TARGET)
 
@@ -22,6 +22,15 @@ priority:
 
 size:
 	$(G++) testSizeof.cc -o size -Wall
+
+vectorTest:
+	$(G++) vector-test.cpp -o vectorTest -Wall
+
+mapTest:
+	$(G++) map-test.cpp -o mapTest -Wall
+
+setTest:
+	$(G++) set-test.cpp -o setTest -Wall
 
 
 clean:

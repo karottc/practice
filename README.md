@@ -14,5 +14,6 @@
 4. [cpp目录](cpp)：一些C++的代码实现；
 5. [theCppProgrammingLanguage目录](theCppProgrammingLanguage)：该书中的代码；
 6. [mysql目录](mysql)：一些SQL的练习；
+7. [network目录](network): 一些网络程序的练习；
 99. Git-pro-zh.pdf：本人制作的Git入门书籍一本，只是把在线的 http://git-scm.com/book/zh 弄了一个离线的版本而已；
 ![gitbook](images/gitbook-preview.png)

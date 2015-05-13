@@ -28,7 +28,7 @@ try:
     # print content["stories"][0]["images"]
     storyUrl = "http://news-at.zhihu.com/api/4/story/%s" % content["stories"][0]["id"]
     print storyUrl
-    storyRequest = urllib2.Request(storyUrl,headers=headers)
+    storyRequest = urllib2.Request(storyUrl, headers=headers)
     storyResponse = urllib2.urlopen(storyRequest)
     print storyResponse.read()
     '''
@@ -38,7 +38,7 @@ try:
         storyUrl = "http://news-at.zhihu.com/api/4/story/%s" % val["id"]
         storyRequest = urllib2.Request(storyUrl,headers=headers)
         storyResponse = urllib2.urlopen(storyRequest)
-        print storyResponse
+        print storyResponse.read()
         print "==================================================="
     '''
 except urllib2.URLError, e:

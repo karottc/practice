@@ -16,14 +16,23 @@ headers = {"User-agent": user_agent}
 
 #url = "http://news-at.zhihu.com/api/4/story/4683248"
 # url = "http://news-at.zhihu.com/api/4/section/2"
-url = "http://news-at.zhihu.com/api/4/story/4728744"
+#url = "http://news-at.zhihu.com/api/4/story/4728744"
+#url = "http://news-at.zhihu.com/api/4/section/2"
+
+listDebunkUrl = "http://news-at.zhihu.com/api/4/section/2"
+request = urllib2.Request(listDebunkUrl, headers=headers)
+response = urllib2.urlopen(request)
+content = json.loads(response.read())
+url = "http://news-at.zhihu.com/api/4/story/%s" % content["stories"][0]["id"]
+
+# url = http://news-at.zhihu.com/api/4/story/4742059  这种情况要特殊处理，这个是2015.05.18的吐槽形式
 
 request = urllib2.Request(url, headers=headers)
 response = urllib2.urlopen(request)
 
 content = json.loads(response.read())
 body = content['body'].replace('\r','')
-
+print body
 bodylines = body.split('\n')
 
 i = 0
@@ -41,9 +50,14 @@ for line in bodylines:
     if line.find('<span class="author">') != -1:
         tempList = line.split('span')
         author = tempList[1].replace(' class="author">','')
-        author = author.replace('，</','')
-        bio = tempList[3].replace(' class="bio">','')
-        bio = bio.replace('</','')
+        # 区分有无个性签名的情况
+        if line.find('bio') != -1:
+            author = author.replace('，</','')
+            bio = tempList[3].replace(' class="bio">','')
+            bio = bio.replace('</','')
+        else:
+            author = author.replace('</','')
+            bio = ""
     if line == '<div class="content">':
         flagAnswer = 1
     elif flagAnswer == 1 and line != '</div>':

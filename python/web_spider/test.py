@@ -3,6 +3,7 @@ __author__ = 'chenyang6'
 import urllib
 import urllib2
 import json
+import copy
 
 import sys
 
@@ -23,29 +24,47 @@ listDebunkUrl = "http://news-at.zhihu.com/api/4/section/2"
 request = urllib2.Request(listDebunkUrl, headers=headers)
 response = urllib2.urlopen(request)
 content = json.loads(response.read())
+endTime = content['timestamp'] + 30 * 60   # 延后半小时
+startTime = endTime + (len(content['stories']) - 1) * 24 * 3600
+print 'start=%d, end=%d' % (startTime,endTime)
+print content['stories'][0]['id']
+print content['stories'][0]['display_date']
+print content['stories'][0]['date']
+print content['stories'][0]['title']
+testTemp = content['stories'][0]['images'][0]  # 小图
+print testTemp
+
 url = "http://news-at.zhihu.com/api/4/story/%s" % content["stories"][0]["id"]
 
-# url = http://news-at.zhihu.com/api/4/story/4742059  这种情况要特殊处理，这个是2015.05.18的吐槽形式
+url = 'http://news-at.zhihu.com/api/4/story/4742059'  #这种情况要特殊处理，这个是2015.05.18的吐槽形式
+#url = "http://news-at.zhihu.com/api/4/story/4728744"
+#url = "http://news-at.zhihu.com/api/4/story/4683248"
+#url = "http://news-at.zhihu.com/api/4/story/4740087"   # 这一条插入数据看失败了，为什么吖。。。啊啊啊
+#url = "http://news-at.zhihu.com/api/4/story/375"
 
 request = urllib2.Request(url, headers=headers)
 response = urllib2.urlopen(request)
 
 content = json.loads(response.read())
 body = content['body'].replace('\r','')
-print body
+#print body
 bodylines = body.split('\n')
 
 i = 0
 flagAnswer = 0
+listAnswer = []
+dictAnswer = {}
 answer = ""
 for line in bodylines:
     if line.find('<h2 class="question-title">') != -1:
         title = line.replace('<h2 class="question-title">','')
         title = title.replace('</h2>','')
+        #dictAnswer['title'] = title
         continue
     if line.find('<img class="avatar"') != -1:
         avatar = line.replace('<img class="avatar" src="','')
         avatar = avatar.replace('">','')
+        dictAnswer['avatar'] = avatar
         continue
     if line.find('<span class="author">') != -1:
         tempList = line.split('span')
@@ -58,19 +77,26 @@ for line in bodylines:
         else:
             author = author.replace('</','')
             bio = ""
+        dictAnswer['author'] = author
+        dictAnswer['bio'] = bio
     if line == '<div class="content">':
         flagAnswer = 1
     elif flagAnswer == 1 and line != '</div>':
         #str = "%s\n" % line
         line = line.replace('<p>','')
         line = line.replace('</p>','')
+        line = line.replace('&hellip;', '...')
         if line.find('<img class="content-image"') != -1:
             tempList = line.split('"')
             line = '<img src="%s" />' % tempList[3]
         answer += "%s\n" % line
         #print line
     elif flagAnswer == 1 and line == '</div>':
+        dictAnswer['answer'] = answer
+        listAnswer.append(copy.deepcopy(dictAnswer))
+        dictAnswer.clear()
         flagAnswer = 0
+        answer = ""
         '''
         print "title:%s" % title
         print "Autor:%s (%s) - %s" % (author, avatar,bio)
@@ -83,17 +109,29 @@ for line in bodylines:
         tempList = line.split('"')
         moreUrl = tempList[3]
         print "title:%s" % title
-        print "Autor:%s (%s) - %s" % (author, avatar,bio)
-        print "answer:%s" % answer
+        strAnswer = json.dumps(listAnswer, ensure_ascii=False)
+        print 'answer:%s' % strAnswer
+        l = json.loads(strAnswer)
+        print '*****************************************************'
+        print len(l)
+        print '*****************************************************'
+        for listan in l:
+            print "Autor:%s (%s) - %s" % (listan['author'], listan['avatar'],listan['bio'])
+            print "answer:%s" % listan['answer']
+            print '*****************************************************'
+
         print "view-more: %s" % moreUrl
         print '------------------------------'
         answer = ""
+        del listAnswer[:]
 
 
 print "======================================"
-for val in content["recommenders"]:
-    print val["avatar"]
+# 2015.05.18 就没有recommender
+if content.has_key('recommenders'):
+    for val in content["recommenders"]:
+        print val["avatar"]
 print "======================================"
-print content["section"]["thumbnail"]
+print content["section"]["thumbnail"]    # 小图
 print "======================================"
-print content["image"]
+print content["image"]     # 大图

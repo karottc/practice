@@ -48,6 +48,8 @@ int main(){
         perror("sockfd\n");
         exit(1);
     }
+    // 对方关闭链接会抛出SIGPIPE异常，屏蔽掉
+    signal(SIGPIPE, SIG_IGN);
     setnonblocking(listenfd);//listenfd设置为非阻塞[1]
     bzero(&local, sizeof(local));
     local.sin_family = AF_INET;
@@ -74,6 +76,7 @@ int main(){
         exit(EXIT_FAILURE);
     }
 
+    int shRet = 0;
     uint32_t times = 0;
     while(1) {
         struct epoll_event events[MAX_EVENTS];
@@ -108,33 +111,43 @@ int main(){
                 continue;
             } 
             if (events[i].events & EPOLLIN) {
-                char buf2[BUFSIZ];
-                //memset(buf, 0, BUFSIZ);
+                char buf[BUFSIZ];
+                memset(buf, 0, BUFSIZ);
                 n = 0;
-                while ((nread = read(fd, buf2 + n, BUFSIZ-1)) > 0) {//ET下可以读就一直读
+                while ((nread = read(fd, buf + n, BUFSIZ-1)) > 0) {//ET下可以读就一直读
                     n += nread;
                 }
+                LOGINFO << ": nread=" << nread << ",errno=" << errno << endl;
                 if (nread == -1 && errno != EAGAIN) {
                     LOGINFO << ": read error" << endl;
                 }
                 ev.data.fd = fd;
-                ev.events = events[i].events | EPOLLOUT | EPOLLET; //MOD OUT 
+                //ev.events = events[i].events | EPOLLOUT | EPOLLET; //MOD OUT 
+                ev.events = EPOLLOUT | EPOLLET; //MOD OUT 
                 LOGINFO << ": mod fd=" << fd << ", epollin" << endl;
                 if (epoll_ctl(epfd, EPOLL_CTL_MOD, fd, &ev) == -1) {
                     LOGINFO << ": epoll_ctl: mod failed" << endl;
                 }
-                LOGINFO << ": n=" << n << ",recv=" << buf2 << endl;
+                LOGINFO << ": n=" << n << ",recv=" << buf << endl;
+                LOGINFO << ": shutdown rd" << endl;
+                shRet = shutdown(fd, SHUT_RD);
+                if (0 != shRet) {
+                    LOGINFO << ": shutdown rd error. errno=" << errno << endl;
+                }
+                //close(fd);
             }
             if (events[i].events & EPOLLOUT) {
                 //char buf[100]="1234567890\n1234567890\n";
                 char buf[100];
+                memset(buf, 0, BUFSIZ);
                 cout << "Pleae input: ";
                 cin >> buf;
-                //sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\n\r\nHello World\n", 11);
+                //close(fd);
                 int nwrite, data_size = strlen(buf);
                 n = data_size;
                 while (n > 0) {
                     nwrite = write(fd, buf + data_size - n, n);//ET下一直将要写数据写完
+                    LOGINFO << ": nwrite=" << nwrite << ",errno=" << errno << endl;
                     if (nwrite < n) {
                         if (nwrite == -1 && errno != EAGAIN) {
                             LOGINFO << ":write error" << endl;
@@ -143,13 +156,18 @@ int main(){
                     }
                     n -= nwrite;
                 }
-                LOGINFO << ": close fd=" << fd << ",i=" << i << ",times=" << times << endl;
-                //ev.data.fd = fd;
-                //ev.events = events[i].events | EPOLLIN; //MOD IN 
+                ev.data.fd = fd;
+                ev.events = EPOLLIN | EPOLLET; //MOD IN 
                 //LOGINFO << ": mod fd=" << fd << ", epollin" << endl;
-                //if (epoll_ctl(epfd, EPOLL_CTL_MOD, fd, &ev) == -1) {
-                //    LOGINFO << ": epoll_ctl: mod failed" << endl;
-                //}
+                if (epoll_ctl(epfd, EPOLL_CTL_MOD, fd, &ev) == -1) {
+                    LOGINFO << ": epoll_ctl: mod failed" << endl;
+                }
+                LOGINFO << ": shutdown wr" << endl;
+                //shRet = shutdown(fd, SHUT_WR);
+                shRet = close(fd);
+                if (0 != shRet) {
+                    LOGINFO << ": shutdown wr error. errno=" << errno << endl;
+                }
                 //close(fd);
             }
         }

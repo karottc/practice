@@ -4,6 +4,22 @@
 
 using namespace std;
 
+typedef int Py_ssize_t;
+
+#define Objecet_EXTRA_HEAD \
+    char *next; \
+    char *prev;
+
+#define Objecet_HEAD \
+    Objecet_EXTRA_HEAD \
+    Py_ssize_t refcnt; \
+    char *ob_type;
+
+typedef struct {
+    Objecet_HEAD
+    long ob_ival;
+}Py_test_size;
+
 int main(int argc, char *argv[])
 {
     cout.setf(ios::left);
@@ -33,5 +49,7 @@ int main(int argc, char *argv[])
      * int*=       8
      * char*=      8
      */
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << setw(12) << "sturctSize=" << sizeof(Py_test_size) << endl;
     return 0;
 }

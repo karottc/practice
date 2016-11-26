@@ -59,8 +59,8 @@ int main(void)
         LOGINFO << ": connect error. " << endl;
         exit(-1);
     }
-    set_socket_timeout(sockfd);
-    // setnonblocking(sockfd);
+    // set_socket_timeout(sockfd);
+    setnonblocking(sockfd);
     int wn = 0;
     int rn = 0;
     int shRet = 0;

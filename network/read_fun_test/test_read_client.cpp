@@ -29,6 +29,16 @@ void setnonblocking(int sockfd) {
     }
 }
 
+void set_socket_timeout(int sockfd)
+{
+    struct timeval ti;
+    ti.tv_sec = 3;
+    ti.tv_usec = 0;
+    int ret = setsockopt(sockfd, SOL_SOCKET,SO_RCVTIMEO, &ti, sizeof(ti));
+    LOGINFO << "ret=" << ret << endl;
+}
+
+
 int main(void)
 {
     int sockfd;
@@ -36,7 +46,7 @@ int main(void)
     int cpid;
     struct sockaddr_in servaddr;
 
-    signal(SIGPIPE, SIG_IGN);
+    // signal(SIGPIPE, SIG_IGN);
 
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
@@ -49,7 +59,7 @@ int main(void)
         LOGINFO << ": connect error. " << endl;
         exit(-1);
     }
-
+    set_socket_timeout(sockfd);
     // setnonblocking(sockfd);
     int wn = 0;
     int rn = 0;
@@ -80,17 +90,17 @@ int main(void)
         memset(buf, 0, 20);
         int nread = 0;
         string tmp = "";
-        // while ((nread = read(sockfd,buf,20)) >= 20) {
-        //    tmp += buf;
-        //    LOGINFO << "nread=" << nread << ",errno=" << errno << endl;
-        // }
-        // LOGINFO << "nread=" << nread << ",errno=" << errno << endl;
-        // LOGINFO << "content=" << buf << "|" << tmp << endl;
-        // if (nread == 0) {
-        //     int ret = close(sockfd);
-        //     LOGINFO << "ret=" << ret << endl;
-        //     break;
-        // }
+        while ((nread = read(sockfd,buf,20)) >= 20) {
+           tmp += buf;
+           LOGINFO << "nread=" << nread << ",errno=" << errno << endl;
+        }
+        LOGINFO << "nread=" << nread << ",errno=" << errno << endl;
+        LOGINFO << "content=" << buf << "|" << tmp << endl;
+        if (nread == 0) {
+            int ret = close(sockfd);
+            LOGINFO << "ret=" << ret << endl;
+            break;
+        }
     }
     shRet = close(sockfd);
     LOGINFO << "shRet=" << shRet << ",errno=" << errno << endl;

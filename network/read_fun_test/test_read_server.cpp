@@ -86,7 +86,6 @@ int main()
             string tmp = "";
             // close(conn_fd);
             // sleep(20);
-            // exit(0);
             while ((nread = read(conn_fd, buf, 20)) >= 20) {
                 tmp += buf;
                 LOGINFO << "nread=" << nread << ",errno=" << errno << endl;
@@ -99,12 +98,12 @@ int main()
             // cout << "Please input: ";
             // cin >> input;
             input = tmp;
-            if (input == "exit") {
-                int ret = close(conn_fd);
-                LOGINFO << "ret=" << ret << endl;
-                break;
-            }
-            // sleep(6);
+            // if (input == "exit") {
+            //     int ret = close(conn_fd);
+            //     LOGINFO << "ret=" << ret << endl;
+            //     break;
+            // }
+            sleep(1);
             int nbyte = 0;
             nbyte = write(conn_fd, input.c_str(), input.size());
             if (-1 == nbyte) {

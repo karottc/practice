@@ -60,13 +60,13 @@ int main(void)
         exit(-1);
     }
     // set_socket_timeout(sockfd);
-    setnonblocking(sockfd);
+    // setnonblocking(sockfd);
     int wn = 0;
     int rn = 0;
     int shRet = 0;
+    LOGINFO << ": fd=" << sockfd << endl;
     while (1) {
         cout << endl;
-        LOGINFO << ": fd=" << sockfd << endl;
         // char input[1024] = "eeeeeeeeeeeee";
         string input = "";
         cout << "Please input: ";
@@ -81,9 +81,12 @@ int main(void)
         LOGINFO << "nbyte=" << nbyte << endl;
 
         if (input == "exit") {
-            int ret = close(sockfd);
+            // sleep(2);
+            // int ret = close(sockfd);
+            // int ret = shutdown(sockfd,SHUT_WR);
+            int ret = shutdown(sockfd,SHUT_RD);
             LOGINFO << "close ret=" << ret << endl;
-            break;
+            // break;
         }
 
         char buf[20];
@@ -96,11 +99,11 @@ int main(void)
         }
         LOGINFO << "nread=" << nread << ",errno=" << errno << endl;
         LOGINFO << "content=" << buf << "|" << tmp << endl;
-        if (nread == 0) {
-            int ret = close(sockfd);
-            LOGINFO << "ret=" << ret << endl;
-            break;
-        }
+        // if (nread == 0) {
+        //     int ret = close(sockfd);
+        //     LOGINFO << "ret=" << ret << endl;
+        //     break;
+        // }
     }
     shRet = close(sockfd);
     LOGINFO << "shRet=" << shRet << ",errno=" << errno << endl;

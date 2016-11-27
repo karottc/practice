@@ -103,7 +103,7 @@ int main()
             //     LOGINFO << "ret=" << ret << endl;
             //     break;
             // }
-            sleep(1);
+            // sleep(1);
             int nbyte = 0;
             nbyte = write(conn_fd, input.c_str(), input.size());
             if (-1 == nbyte) {

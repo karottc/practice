@@ -93,6 +93,7 @@ int main(void)
         memset(buf, 0, 20);
         int nread = 0;
         string tmp = "";
+        sleep(1);
         while ((nread = read(sockfd,buf,20)) >= 20) {
            tmp += buf;
            LOGINFO << "nread=" << nread << ",errno=" << errno << endl;

@@ -9,6 +9,8 @@
 #include <string>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
 
 using namespace std;
 
@@ -38,6 +40,17 @@ void set_socket_timeout(int sockfd)
     LOGINFO << "ret=" << ret << endl;
 }
 
+void set_tcp_keepalive(int sockfd)
+{
+    int keepalive = 1; // 开启keepalive属性
+    int keepidle = 60; // 如该连接在60秒内没有任何数据往来,则进行探测
+    int keepinterval = 5; // 探测时发包的时间间隔为5 秒
+    int keepcount = 3; // 探测尝试的次数。如果第1次探测包就收到响应了,则后2次的不再发。
+    setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, (void *)&keepalive , sizeof(keepalive ));
+    setsockopt(sockfd, SOL_TCP, TCP_KEEPIDLE, (void*)&keepidle , sizeof(keepidle ));
+    setsockopt(sockfd, SOL_TCP, TCP_KEEPINTVL, (void *)&keepinterval , sizeof(keepinterval ));
+    setsockopt(sockfd, SOL_TCP, TCP_KEEPCNT, (void *)&keepcount , sizeof(keepcount ));
+}
 
 int main(void)
 {
@@ -50,7 +63,8 @@ int main(void)
 
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
-    inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr);
+    // inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr);
+    inet_pton(AF_INET, "192.168.1.104", &servaddr.sin_addr);
     servaddr.sin_port = htons(PORT);
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -61,6 +75,7 @@ int main(void)
     }
     // set_socket_timeout(sockfd);
     // setnonblocking(sockfd);
+    set_tcp_keepalive(sockfd);
     int wn = 0;
     int rn = 0;
     int shRet = 0;
